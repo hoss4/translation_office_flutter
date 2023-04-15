@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:translation_office_flutter/services/api_service.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
+import 'package:translation_office_flutter/components/navigation_drawer.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ClientHomePage extends StatefulWidget {
+  const ClientHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ClientHomePage> createState() => _ClientHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ClientHomePageState extends State<ClientHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavigationDrawerWidget(),
       appBar: AppBar(
         title: Text("Home"),
         actions: [
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       backgroundColor: Colors.grey[200],
-      body: userProfile(),
+      // body: userProfile(),
     );
   }
 

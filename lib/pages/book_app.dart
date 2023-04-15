@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/components/dropdownlist.dart';
+import 'package:translation_office_flutter/components/navigation_drawer.dart';
 import 'package:translation_office_flutter/components/radio.dart';
 import 'package:translation_office_flutter/services/client_api.dart';
 
@@ -30,6 +31,7 @@ class _BookAppState extends State<BookApp> {
     var _selectedIndex = 1;
     print(dateTime);
     return Scaffold(
+      drawer: NavigationDrawerWidget(),
       appBar: AppBar(
         title: Text("Appointement"),
       ),
@@ -112,25 +114,6 @@ class _BookAppState extends State<BookApp> {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_2),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Book appointment',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) {
-          if (index == 0) {
-            Navigator.pushNamed(context, '/profile');
-          }
-        },
       ),
     );
   }
