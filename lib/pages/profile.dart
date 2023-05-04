@@ -26,8 +26,6 @@ class _ProfileState extends State<Profile> {
     super.initState();
     //nameController.text = widget.client!.name.toString();
     //backupemailController.text = widget.client!.backupemail.toString();
-    passwordController.text = widget.client!.password.toString();
-    emailController.text = widget.client!.email.toString();
   }
 
   Widget build(BuildContext context) {
@@ -38,8 +36,7 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: ClientApi.get_client(
-              emailController.text, passwordController.text),
+          future: ClientApi.getclient(),
           builder: (context, AsyncSnapshot snapshot) {
             print(snapshot.hasData);
             emailController.text = snapshot.data['email'];
@@ -120,11 +117,10 @@ class _ProfileState extends State<Profile> {
                           onPressed: () {
                             Client client = new Client(
                                 email: emailController.text,
-                                password: passwordController.text,
-                                backupemail: backupemailController.text,
+                                username: backupemailController.text,
                                 name: nameController.text);
 
-                            ClientApi.update_client(id, client);
+                            ClientApi.updateclient(client);
                           },
                           child: Text("Save Changes",
                               style: TextStyle(

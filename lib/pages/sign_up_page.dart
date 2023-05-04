@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/services/api_service.dart';
@@ -19,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   String? userName;
   String? password;
+  String? password2;
   String? email;
   String? name;
   @override
@@ -129,10 +131,63 @@ class _SignUpPageState extends State<SignUpPage> {
                 if (onValidateValue.isEmpty) {
                   return "Must Add a Password ";
                 }
+
                 return null;
               },
               (onSavedValue) => {
                 password = onSavedValue,
+              },
+              onChange: (onChangedValue) => {
+                password = onChangedValue,
+              },
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10,
+              obscureText: hidePassword,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(
+                    () {
+                      hidePassword = !hidePassword;
+                    },
+                  );
+                },
+                color: Colors.white.withOpacity(0.7),
+                icon: Icon(
+                    hidePassword ? Icons.visibility_off : Icons.visibility),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: FormHelper.inputFieldWidget(
+              context,
+              "Re-write Password",
+              "Re-write Password",
+              prefixIcon: Icon(
+                Icons.security,
+              ),
+              prefixIconPaddingLeft: 25,
+              showPrefixIcon: true,
+              (onValidateValue) {
+                if (onValidateValue.isEmpty) {
+                  return "Must Re-Write Password ";
+                }
+
+                if (password2 != password) {
+                  return "Passwords do not rematch";
+                }
+
+                return null;
+              },
+              (onSavedValue) => {
+                password2 = onSavedValue,
+              },
+              onChange: (onChangedValue) => {
+                password2 = onChangedValue,
               },
               borderFocusColor: Colors.white,
               prefixIconColor: Colors.white,
@@ -233,28 +288,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       isApiCallProcess = false;
                     });
                     if (response.data != null) {
-                      FormHelper.showSimpleAlertDialog(
-                        context,
-                        "Succes",
-                        "Registered Succesfully, please Login ",
-                        "OK",
-                        () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            '/login',
-                            (route) => false,
-                          );
-                        },
+                      showCupertinoDialog(
+                        context: context,
+                        builder: createDialog,
                       );
                     } else {
-                      FormHelper.showSimpleAlertDialog(
-                        context,
-                        "An Error has occured",
-                        response.message,
-                        "OK",
-                        () {
-                          Navigator.pop(context);
-                        },
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (context) =>
+                            failureDialog(context, response.message!),
                       );
                     }
                   });
@@ -281,4 +323,51 @@ class _SignUpPageState extends State<SignUpPage> {
       return false;
     }
   }
+
+  Widget createDialog(BuildContext context) => CupertinoAlertDialog(
+          title: Text(
+            "Success",
+            style: TextStyle(
+              fontSize: 22,
+            ),
+          ),
+          content: Text(
+            "Registered Succesfully, please Login",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+                child: Text("Done"),
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',
+                    (route) => false,
+                  );
+                })
+          ]);
+
+  Widget failureDialog(BuildContext context, String message) =>
+      CupertinoAlertDialog(
+          title: Text(
+            "Error",
+            style: TextStyle(
+              fontSize: 22,
+            ),
+          ),
+          content: Text(
+            "$message",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+                child: Text("Done"),
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ]);
 }

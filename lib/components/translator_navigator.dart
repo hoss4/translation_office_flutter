@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/pages/book_app.dart';
-import 'package:translation_office_flutter/pages/client_home_page.dart';
-import 'package:translation_office_flutter/pages/personal_info_page.dart';
-import 'package:translation_office_flutter/pages/requested_translation.dart';
-import 'package:translation_office_flutter/pages/upcoming_appointements.dart';
+
+import 'package:translation_office_flutter/pages/translator_home_page.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
-  const NavigationDrawerWidget({super.key});
+class TranslatorNaviagtor extends StatelessWidget {
+  const TranslatorNaviagtor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +38,7 @@ class NavigationDrawerWidget extends StatelessWidget {
               thickness: 1.5,
             ),
             buildMenuItem(
-              text: 'Book Appointement',
+              text: 'Appointement Requests',
               icon: Icons.edit_calendar_outlined,
               onClicked: () => SelectedItem(context, 2),
             ),
@@ -49,7 +46,7 @@ class NavigationDrawerWidget extends StatelessWidget {
               height: 20,
             ),
             buildMenuItem(
-              text: 'Requested Appointements',
+              text: 'Previous Appointements',
               icon: Icons.pending_actions_sharp,
               onClicked: () => SelectedItem(context, 3),
             ),
@@ -118,28 +115,28 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ClientHomePage(),
+          builder: (context) => TranslatorHomePage(),
         ));
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => InformationPage(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => InformationPage(),
+        // ));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BookApp(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => BookApp(),
+        // ));
         break;
       case 3:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RequestedTranslations(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => RequestedTranslations(),
+        // ));
         break;
       case 4:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => UpcomingAppointements(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => UpcomingAppointements(),
+        // ));
         break;
     }
   }

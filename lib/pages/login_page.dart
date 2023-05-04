@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sort_child_properties_last
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/models/login_request_model.dart';
@@ -206,21 +207,36 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() {
                       isApiCallProcess = false;
                     });
-                    if (response) {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/home',
-                        (route) => false,
-                      );
+
+                    if (response['status'] == 'true') {
+                      String type = (response['response'].data!.type);
+                      if (type == 'client') {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/clienthome',
+                          (route) => false,
+                        );
+                      }
+                      if (type == 'admin') {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/adminhome',
+                          (route) => false,
+                        );
+                      }
+                      if (type == 'translator') {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/transhome',
+                          (route) => false,
+                        );
+                      }
                     } else {
-                      FormHelper.showSimpleAlertDialog(
-                        context,
-                        "An Error has occured",
-                        "Invalid Username/Password",
-                        "OK",
-                        () {
-                          Navigator.pop(context);
-                        },
+                      String message = response['response'].message;
+
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (context) => failureDialog(context, message),
                       );
                     }
                   });
@@ -273,7 +289,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        print('pressed');
                         Navigator.pushNamed(context, '/register');
                       },
                   ),
@@ -296,4 +311,26 @@ class _LoginPageState extends State<LoginPage> {
       return false;
     }
   }
+
+  Widget failureDialog(BuildContext context, String message) =>
+      CupertinoAlertDialog(
+          title: Text(
+            "Error",
+            style: TextStyle(
+              fontSize: 22,
+            ),
+          ),
+          content: Text(
+            "$message",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+                child: Text("Done"),
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ]);
 }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/pages/book_app.dart';
-import 'package:translation_office_flutter/pages/client_home_page.dart';
-import 'package:translation_office_flutter/pages/personal_info_page.dart';
-import 'package:translation_office_flutter/pages/requested_translation.dart';
-import 'package:translation_office_flutter/pages/upcoming_appointements.dart';
+import 'package:translation_office_flutter/pages/admin_home_page.dart';
+
+import 'package:translation_office_flutter/pages/translator_home_page.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
-  const NavigationDrawerWidget({super.key});
+class AdminNaviagtor extends StatelessWidget {
+  const AdminNaviagtor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,46 +18,30 @@ class NavigationDrawerWidget extends StatelessWidget {
           ),
           children: <Widget>[
             const SizedBox(
-              height: 60,
+              height: 80,
             ),
             buildMenuItem(
               text: 'profile',
               icon: Icons.person,
               onClicked: () => SelectedItem(context, 0),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuItem(
-              text: 'Personal Info',
-              icon: Icons.info_outline,
-              onClicked: () => SelectedItem(context, 1),
-            ),
             Divider(
               color: Colors.white,
-              height: 75,
+              height: 70,
               thickness: 1.5,
             ),
             buildMenuItem(
-              text: 'Book Appointement',
-              icon: Icons.edit_calendar_outlined,
+              text: 'Create User',
+              icon: Icons.person_add_alt_1_rounded,
               onClicked: () => SelectedItem(context, 2),
             ),
             SizedBox(
               height: 20,
             ),
             buildMenuItem(
-              text: 'Requested Appointements',
-              icon: Icons.pending_actions_sharp,
+              text: 'Appointement Requests',
+              icon: Icons.app_registration_rounded,
               onClicked: () => SelectedItem(context, 3),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            buildMenuItem(
-              text: 'Upcoming Appointements',
-              icon: Icons.people,
-              onClicked: () => SelectedItem(context, 4),
             ),
             Divider(
               color: Colors.white,
@@ -118,28 +100,18 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ClientHomePage(),
+          builder: (context) => AdminHomePage(),
         ));
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => InformationPage(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => InformationPage(),
+        // ));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BookApp(),
-        ));
-        break;
-      case 3:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RequestedTranslations(),
-        ));
-        break;
-      case 4:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => UpcomingAppointements(),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => BookApp(),
+        // ));
         break;
     }
   }

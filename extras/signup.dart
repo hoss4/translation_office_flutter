@@ -108,11 +108,9 @@ class _SignUPState extends State<SignUP> {
               onPressed: () async {
                 Client client = Client(
                   name: nameController.text,
-                  backupemail: backupemailController.text,
-                  password: passwordController.text,
                   email: emailController.text,
                 );
-                await ClientApi.create_client(client);
+                //await ClientApi.create_client(client);
                 Navigator.pushReplacementNamed(context, '/Home');
                 Navigator.push(
                   context,
@@ -120,8 +118,6 @@ class _SignUPState extends State<SignUP> {
                     builder: (context) => Profile(
                         client: Client(
                       name: nameController.text,
-                      backupemail: backupemailController.text,
-                      password: passwordController.text,
                       email: emailController.text,
                     )),
                   ),

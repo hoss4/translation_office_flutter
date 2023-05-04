@@ -11,45 +11,55 @@ class _RadioButtonGroupWidgetState extends State<RadioButtonGroupWidget> {
   static const values = <String>['on the phone', 'in person'];
   String selectedValue = values.first;
 
-  final selectedColor = Colors.black;
-  final unselectedColor = Colors.white;
+  // final Color selectedColor = Colors.blue;
+  final Color unselectedColor = Colors.black;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 56.0),
-        child: Container(
-          color: Colors.blue[500],
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Divider(color: Colors.white),
-                buildRadios(),
-                Divider(color: Colors.white),
-              ],
+  Widget build(BuildContext context) => Container(
+        //color: Colors.grey[200],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10),
+              child: Text(
+                'pick your prefered way of communication :',
+                style: TextStyle(
+                  fontSize: 17,
+                  // fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
             ),
-          ),
+            Divider(color: Colors.white),
+            buildRadios(),
+            Divider(color: Colors.white),
+          ],
         ),
       );
 
   Widget buildRadios() => Theme(
         data: Theme.of(context).copyWith(
-          unselectedWidgetColor: unselectedColor,
+          unselectedWidgetColor: Colors.black,
         ),
         child: Column(
           children: values.map(
             (value) {
               final selected = this.selectedValue == value;
-              final color = selected ? selectedColor : unselectedColor;
+              final color = selected ? Colors.blue : Colors.black;
 
               return RadioListTile<String>(
                 value: value,
                 groupValue: selectedValue,
                 title: Text(
                   value,
-                  style: TextStyle(color: color),
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 17,
+                  ),
                 ),
-                activeColor: selectedColor,
+                activeColor: Colors.blue,
                 onChanged: (value) => setState(() {
                   selectedValue = value!;
                   widget.change(value);

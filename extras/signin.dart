@@ -76,10 +76,7 @@ class _SignInState extends State<SignIn> {
                     MaterialPageRoute(
                         builder: (context) => Profile(
                             client: Client(
-                                password: passwordController.text,
-                                email: emailController.text,
-                                backupemail: '',
-                                name: ""))));
+                                email: emailController.text, name: ""))));
               },
               child: Text(
                 "Sign in",

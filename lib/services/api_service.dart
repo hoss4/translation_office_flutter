@@ -11,7 +11,10 @@ import 'package:translation_office_flutter/services/shared_service.dart';
 class APIService {
   static var client = http.Client();
 
-  static Future<bool> login(LoginRequestModel model) async {
+  static Future<Map> login(LoginRequestModel model) async {
+    //new code
+    Map res = {};
+
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
@@ -22,12 +25,19 @@ class APIService {
       body: jsonEncode(model.toJson()),
     );
     if (response.statusCode == 200) {
-      print(response.body);
+      //print(response.body);
       await SharedService.setLoginDetails(loginResponseJson(response.body));
-      return true;
+      // new code
+      res = {"status": "true", "response": loginResponseJson(response.body)};
+      return res;
+      //return true;
     } else {
-      print(response.body);
-      return false;
+      // new code
+      print("here-----");
+      res = {"status": "false", "response": loginResponseJson(response.body)};
+
+      return res;
+      //return false;
     }
   }
 
@@ -44,30 +54,6 @@ class APIService {
       body: jsonEncode(model.toJson()),
     );
 
-    print("----" + response.body);
     return registerResponseJson(response.body);
-  }
-
-  static Future<String> getUserProfile() async {
-    var loginDetails = await SharedService.loginDetails();
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ${loginDetails!.data.token}'
-    };
-
-    var url = Uri.http(config.apiURL, config.userProfileAPI);
-
-    var response = await http.get(
-      url,
-      headers: requestHeaders,
-    );
-
-    if (response.statusCode == 200) {
-      print("hello---" + response.body);
-      return response.body;
-    } else {
-      print("hello1---" + response.body);
-      return "";
-    }
   }
 }
