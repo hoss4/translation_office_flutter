@@ -1,9 +1,9 @@
-class Client {
+class Translator {
   String? email;
   String? username;
   String? name;
 
-  Client({
+  Translator({
     this.email,
     this.username,
     this.name,

@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 class RegisterRequestModel {
   RegisterRequestModel({this.username, this.password, this.email, this.name});
   late final String? username;

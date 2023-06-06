@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/services/api_service.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
-
 import '../models/register_request_model.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -27,15 +25,33 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/login',
+              (route) => false,
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+      ),
       backgroundColor: Colors.blue,
       body: ProgressHUD(
+        inAsyncCall: isApiCallProcess,
+        opacity: 0.3,
+        key: UniqueKey(),
         child: Form(
           key: globalFormKey,
           child: _signupUI(context),
         ),
-        inAsyncCall: isApiCallProcess,
-        opacity: 0.3,
-        key: UniqueKey(),
       ),
     ));
   }
@@ -49,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -76,8 +92,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
+          const Padding(
+            padding: EdgeInsets.only(
               top: 20,
               left: 20,
               bottom: 30,
@@ -95,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
             context,
             "Username",
             "Username",
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.person,
             ),
             prefixIconPaddingLeft: 25,
@@ -122,7 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
               context,
               "Password",
               "Password",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.security,
               ),
               prefixIconPaddingLeft: 25,
@@ -167,7 +183,7 @@ class _SignUpPageState extends State<SignUpPage> {
               context,
               "Re-write Password",
               "Re-write Password",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.security,
               ),
               prefixIconPaddingLeft: 25,
@@ -216,7 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
               context,
               "Email",
               "Email",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.email,
               ),
               prefixIconPaddingLeft: 25,
@@ -244,7 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
               context,
               "Name",
               "Name",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.abc,
               ),
               prefixIconPaddingLeft: 25,
@@ -266,7 +282,7 @@ class _SignUpPageState extends State<SignUpPage> {
               borderRadius: 10,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           Center(
@@ -296,7 +312,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       showCupertinoDialog(
                         context: context,
                         builder: (context) =>
-                            failureDialog(context, response.message!),
+                            failureDialog(context, response.message),
                       );
                     }
                   });
@@ -325,13 +341,13 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget createDialog(BuildContext context) => CupertinoAlertDialog(
-          title: Text(
+          title: const Text(
             "Success",
             style: TextStyle(
               fontSize: 22,
             ),
           ),
-          content: Text(
+          content: const Text(
             "Registered Succesfully, please Login",
             style: TextStyle(
               fontSize: 18,
@@ -339,7 +355,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           actions: [
             CupertinoDialogAction(
-                child: Text("Done"),
+                child: const Text("Done"),
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
@@ -351,21 +367,21 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget failureDialog(BuildContext context, String message) =>
       CupertinoAlertDialog(
-          title: Text(
+          title: const Text(
             "Error",
             style: TextStyle(
               fontSize: 22,
             ),
           ),
           content: Text(
-            "$message",
-            style: TextStyle(
+            message,
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),
           actions: [
             CupertinoDialogAction(
-                child: Text("Done"),
+                child: const Text("Done"),
                 onPressed: () {
                   Navigator.pop(context);
                 })

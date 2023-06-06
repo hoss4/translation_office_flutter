@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sort_child_properties_last, library_private_types_in_public_api
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/models/login_request_model.dart';
+import 'package:translation_office_flutter/pages/forget_password.dart';
 import 'package:translation_office_flutter/services/api_service.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
@@ -180,7 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          print(" Forget password");
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ForgetPassword()));
                         },
                     ),
                   ],
@@ -321,7 +323,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           content: Text(
-            "$message",
+            message,
             style: TextStyle(
               fontSize: 18,
             ),

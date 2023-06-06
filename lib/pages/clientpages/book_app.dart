@@ -1,15 +1,12 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/components/button_widget.dart';
 import 'package:translation_office_flutter/components/dropdownlist.dart';
-import 'package:translation_office_flutter/components/language_picker_widget.dart';
 import 'package:translation_office_flutter/components/navigation_drawer.dart';
 import 'package:translation_office_flutter/components/pick_time.dart';
 import 'package:translation_office_flutter/components/radio.dart';
+import 'package:translation_office_flutter/languages.dart';
 import 'package:translation_office_flutter/models/translation_request.dart';
 import 'package:translation_office_flutter/services/client_api.dart';
 import 'package:translation_office_flutter/utils.dart';
@@ -22,14 +19,8 @@ class BookApp extends StatefulWidget {
 }
 
 class _BookAppState extends State<BookApp> {
-  @override
-  List<String> languages = [
-    "English",
-    "Arabic",
-    "German",
-    "French",
-    "Spanish",
-  ];
+  List<String> languages = Languages.languages;
+
   int index = 0;
   String? fromlang = 'English';
   String? tolang = 'Arabic';
@@ -37,13 +28,8 @@ class _BookAppState extends State<BookApp> {
   DateTime dateTime = DateTime.now();
   DateTime time = DateTime.now();
 
-  void initState() {
-    super.initState();
-  }
-
+  @override
   Widget build(BuildContext context) {
-    var _selectedIndex = 1;
-    print(value);
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
@@ -53,6 +39,7 @@ class _BookAppState extends State<BookApp> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -66,7 +53,7 @@ class _BookAppState extends State<BookApp> {
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
-                'Pleasse fill in all of the following fields :',
+                'Please fill in all of the following fields :',
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -183,10 +170,11 @@ class _BookAppState extends State<BookApp> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 60,
             ),
             Center(
-              child: ElevatedButton(
+              child: CupertinoButton(
+                color: Colors.blue,
                 onPressed: () async {
                   var onthePhone = false;
                   var inperson = false;
@@ -195,17 +183,22 @@ class _BookAppState extends State<BookApp> {
                   } else if (value == 'in person') {
                     inperson = true;
                   }
-
+                  dateTime = DateTime(
+                    dateTime.year,
+                    dateTime.month,
+                    dateTime.day,
+                    time.hour,
+                    time.minute,
+                  );
                   TranslationRequest request = TranslationRequest(
                     fromlanguage: fromlang,
                     tolanguage: tolang,
                     date: dateTime,
-                    time: time,
                     onthephone: onthePhone,
                     inperson: inperson,
                   );
 
-                  var response = await ClientApi.create_req(request);
+                  var response = await ClientApi.createreq(request);
 
                   if (response['status'] == '200') {
                     showCupertinoDialog(
@@ -220,9 +213,12 @@ class _BookAppState extends State<BookApp> {
                     );
                   }
                 },
-                child: Text('confirm'),
+                child: Text('Confirm'),
               ),
-            )
+            ),
+            SizedBox(
+              height: 60,
+            ),
           ],
         ),
       ),
@@ -247,7 +243,11 @@ class _BookAppState extends State<BookApp> {
         child: CupertinoDatePicker(
           initialDateTime: DateTime.now(),
           mode: CupertinoDatePickerMode.time,
-          onDateTimeChanged: (time) => setState(() => this.time = time),
+          onDateTimeChanged: (time) => setState(
+            () {
+              this.time = time;
+            },
+          ),
         ),
       );
 
@@ -281,7 +281,7 @@ class _BookAppState extends State<BookApp> {
             ),
           ),
           content: Text(
-            "$message",
+            message,
             style: TextStyle(
               fontSize: 18,
             ),

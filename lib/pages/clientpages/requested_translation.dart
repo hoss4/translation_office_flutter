@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/models/login_response_model.dart';
-import 'package:translation_office_flutter/models/translation_request.dart';
 import 'package:translation_office_flutter/services/client_api.dart';
-import '../components/navigation_drawer.dart';
+import '../../components/navigation_drawer.dart';
+import 'package:intl/intl.dart';
 
 class RequestedTranslations extends StatefulWidget {
   const RequestedTranslations({super.key});
@@ -14,23 +15,18 @@ class RequestedTranslations extends StatefulWidget {
 
 class _RequestedTranslationsState extends State<RequestedTranslations> {
   @override
-  void initState() {
-    super.initState();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: Text("Requested Translations "),
+        title: const Text("Requested Appointements"),
         centerTitle: true,
       ),
       body: FutureBuilder<List<dynamic>>(
           future: ClientApi.getRequestedTranslations(),
           builder: (context, AsyncSnapshot snapshot) {
-            ;
             if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text("Error"),
               );
             }
@@ -42,10 +38,10 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
                     String tolang = snapshot.data![index]['tolang'];
                     DateTime date =
                         DateTime.parse(snapshot.data![index]['date']);
-                    DateTime time =
-                        DateTime.parse(snapshot.data![index]['time']);
+
                     DateTime newtime =
-                        DateTime(0, 0, 0, time.hour + 2, time.minute);
+                        DateTime(0, 0, 0, date.hour + 2, date.minute);
+
                     bool onthephone = snapshot.data![index]['onthephone'];
 
                     return Card(
@@ -55,7 +51,7 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
                         child: ListTile(
                           leading: onthephone
                               ? Column(
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.phone,
                                       size: 20,
@@ -68,7 +64,7 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
                                   ],
                                 )
                               : Column(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.people_alt_sharp),
                                     SizedBox(height: 8),
                                     Text(
@@ -82,16 +78,16 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
                               top: 8.0,
                               bottom: 10.0,
                             ),
-                            child: Text('From ${fromlang} To ${tolang}',
-                                style: TextStyle(
+                            child: Text('From $fromlang To $tolang',
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20)),
                           ),
                           subtitle: Text(
-                              ' ${date.day}/${date.month}/${date.year}  ${newtime.hour}:${newtime.minute}',
-                              style: TextStyle(
+                              ' ${date.day}/${date.month}/${date.year}  ${DateFormat.jm().format(newtime)}',
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                           trailing: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.cancel_outlined,
                                 color: Colors.red,
                                 size: 30,
@@ -118,13 +114,13 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
                                 });
                               }),
                           isThreeLine: true,
-                          contentPadding: EdgeInsets.all(10),
+                          contentPadding: const EdgeInsets.all(10),
                         ),
                       ),
                     );
                   });
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -133,21 +129,21 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
   }
 
   Widget createDialog(BuildContext context) => CupertinoAlertDialog(
-          title: Text(
+          title: const Text(
             "Success",
             style: TextStyle(
               fontSize: 22,
             ),
           ),
-          content: Text(
-            "Appointement has been succesfully removed",
+          content: const Text(
+            "Appointement has been succesfully cancelled",
             style: TextStyle(
               fontSize: 18,
             ),
           ),
           actions: [
             CupertinoDialogAction(
-                child: Text("Done"),
+                child: const Text("Done"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
@@ -155,21 +151,21 @@ class _RequestedTranslationsState extends State<RequestedTranslations> {
 
   Widget failureDialog(BuildContext context, String message) =>
       CupertinoAlertDialog(
-          title: Text(
+          title: const Text(
             "Error",
             style: TextStyle(
               fontSize: 22,
             ),
           ),
           content: Text(
-            "$message",
-            style: TextStyle(
+            message,
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),
           actions: [
             CupertinoDialogAction(
-                child: Text("Done"),
+                child: const Text("Done"),
                 onPressed: () {
                   Navigator.pop(context);
                 })

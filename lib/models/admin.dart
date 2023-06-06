@@ -1,9 +1,9 @@
-class Client {
+class Admin {
   String? email;
   String? username;
   String? name;
 
-  Client({
+  Admin({
     this.email,
     this.username,
     this.name,

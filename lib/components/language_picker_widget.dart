@@ -17,11 +17,12 @@ class PickerWidget extends StatelessWidget {
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: Size(100, 42),
+            minimumSize: const Size(100, 42),
             backgroundColor: Colors.white,
             foregroundColor: Colors.blue,
-            side: BorderSide(color: Colors.blue, width: 3),
+            side: const BorderSide(color: Colors.blue, width: 3),
           ),
+          onPressed: onClicked,
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10),
             child: Column(
@@ -31,8 +32,8 @@ class PickerWidget extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(width: 8),
+                    children: const [
+                      SizedBox(width: 8),
                       Text(
                         'From',
                         style: TextStyle(
@@ -42,16 +43,16 @@ class PickerWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Row(
                   children: [
                     Text(lang!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
-                    SizedBox(width: 80),
-                    Icon(
+                    const SizedBox(width: 80),
+                    const Icon(
                       Icons.arrow_drop_down,
                       size: 30,
                       color: Colors.grey,
@@ -61,7 +62,6 @@ class PickerWidget extends StatelessWidget {
               ],
             ),
           ),
-          onPressed: onClicked,
         ),
       );
 }

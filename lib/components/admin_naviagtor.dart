@@ -1,7 +1,10 @@
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/pages/admin_home_page.dart';
-
-import 'package:translation_office_flutter/pages/translator_home_page.dart';
+import 'package:translation_office_flutter/pages/adminpages/admin_home_page.dart';
+import 'package:translation_office_flutter/pages/adminpages/create_user.dart';
+import 'package:translation_office_flutter/pages/adminpages/view_appsad.dart';
+import 'package:translation_office_flutter/pages/adminpages/view_oldapp.dart';
+import 'package:translation_office_flutter/pages/adminpages/view_requests.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
 
 class AdminNaviagtor extends StatelessWidget {
@@ -13,7 +16,7 @@ class AdminNaviagtor extends StatelessWidget {
       child: Material(
         color: Colors.blue,
         child: ListView(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
           children: <Widget>[
@@ -25,25 +28,41 @@ class AdminNaviagtor extends StatelessWidget {
               icon: Icons.person,
               onClicked: () => SelectedItem(context, 0),
             ),
-            Divider(
+            const Divider(
               color: Colors.white,
-              height: 70,
+              height: 75,
               thickness: 1.5,
             ),
             buildMenuItem(
               text: 'Create User',
               icon: Icons.person_add_alt_1_rounded,
-              onClicked: () => SelectedItem(context, 2),
+              onClicked: () => SelectedItem(context, 1),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             buildMenuItem(
               text: 'Appointement Requests',
               icon: Icons.app_registration_rounded,
+              onClicked: () => SelectedItem(context, 2),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuItem(
+              text: 'Previous Appointements',
+              icon: Icons.pending_actions_sharp,
               onClicked: () => SelectedItem(context, 3),
             ),
-            Divider(
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuItem(
+              text: 'Upcoming Appointements',
+              icon: Icons.people,
+              onClicked: () => SelectedItem(context, 4),
+            ),
+            const Divider(
               color: Colors.white,
               height: 75,
               thickness: 1.5,
@@ -76,8 +95,8 @@ class AdminNaviagtor extends StatelessWidget {
     required IconData icon,
     VoidCallback? onClicked,
   }) {
-    final color = Colors.white;
-    double Size = 15;
+    const color = Colors.white;
+    const double Size = 15;
 
     return ListTile(
       leading: Icon(
@@ -87,7 +106,7 @@ class AdminNaviagtor extends StatelessWidget {
       ),
       title: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           color: color,
           fontSize: Size,
         ),
@@ -100,18 +119,28 @@ class AdminNaviagtor extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AdminHomePage(),
+          builder: (context) => const AdminHomePage(),
         ));
         break;
       case 1:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => InformationPage(),
-        // ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const CreateUser(),
+        ));
         break;
       case 2:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => BookApp(),
-        // ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ViewRequest(),
+        ));
+        break;
+      case 3:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ViewOldApp(),
+        ));
+        break;
+      case 4:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ViewAppA(),
+        ));
         break;
     }
   }

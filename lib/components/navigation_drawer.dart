@@ -1,9 +1,11 @@
+// ignore_for_file: prefer_const_constructors, constant_identifier_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/pages/book_app.dart';
-import 'package:translation_office_flutter/pages/client_home_page.dart';
-import 'package:translation_office_flutter/pages/personal_info_page.dart';
-import 'package:translation_office_flutter/pages/requested_translation.dart';
-import 'package:translation_office_flutter/pages/upcoming_appointements.dart';
+import 'package:translation_office_flutter/pages/clientpages/book_app.dart';
+import 'package:translation_office_flutter/pages/clientpages/client_home_page.dart';
+import 'package:translation_office_flutter/pages/clientpages/previous_appointements.dart';
+import 'package:translation_office_flutter/pages/clientpages/requested_translation.dart';
+import 'package:translation_office_flutter/pages/clientpages/upcoming_appointements.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
@@ -20,20 +22,12 @@ class NavigationDrawerWidget extends StatelessWidget {
           ),
           children: <Widget>[
             const SizedBox(
-              height: 60,
+              height: 80,
             ),
             buildMenuItem(
               text: 'profile',
               icon: Icons.person,
               onClicked: () => SelectedItem(context, 0),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuItem(
-              text: 'Personal Info',
-              icon: Icons.info_outline,
-              onClicked: () => SelectedItem(context, 1),
             ),
             Divider(
               color: Colors.white,
@@ -43,13 +37,21 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildMenuItem(
               text: 'Book Appointement',
               icon: Icons.edit_calendar_outlined,
-              onClicked: () => SelectedItem(context, 2),
+              onClicked: () => SelectedItem(context, 1),
             ),
             SizedBox(
               height: 20,
             ),
             buildMenuItem(
               text: 'Requested Appointements',
+              icon: Icons.app_registration_rounded,
+              onClicked: () => SelectedItem(context, 2),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            buildMenuItem(
+              text: 'Previous Appointements',
               icon: Icons.pending_actions_sharp,
               onClicked: () => SelectedItem(context, 3),
             ),
@@ -94,8 +96,8 @@ class NavigationDrawerWidget extends StatelessWidget {
     required IconData icon,
     VoidCallback? onClicked,
   }) {
-    final color = Colors.white;
-    double Size = 15;
+    const color = Colors.white;
+    const double Size = 15;
 
     return ListTile(
       leading: Icon(
@@ -123,17 +125,17 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => InformationPage(),
+          builder: (context) => BookApp(),
         ));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BookApp(),
+          builder: (context) => RequestedTranslations(),
         ));
         break;
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RequestedTranslations(),
+          builder: (context) => PreviousAppointements(),
         ));
         break;
       case 4:

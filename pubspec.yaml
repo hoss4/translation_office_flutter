@@ -34,7 +34,12 @@ dependencies:
   http: ^0.13.5  
   api_cache_manager: ^1.0.2
   snippet_coder_utils: ^1.0.13
-  
+  email_validator: ^2.1.17
+  sms_autofill: ^2.3.0
+  intl: ^0.18.1
+  fluttertoast: ^8.2.1
+  language_picker: ^0.4.3
+  getworld: ^1.1.0
 
 
 

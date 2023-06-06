@@ -1,13 +1,12 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/pages/admin_home_page.dart';
-import 'package:translation_office_flutter/pages/book_app.dart';
+import 'package:translation_office_flutter/pages/adminpages/admin_home_page.dart';
 import 'package:translation_office_flutter/pages/login_page.dart';
 import 'package:translation_office_flutter/pages/sign_up_page.dart';
-import 'package:translation_office_flutter/pages/profile.dart';
-import 'package:translation_office_flutter/pages/create_user.dart';
-import 'package:translation_office_flutter/pages/translator_home_page.dart';
+import 'package:translation_office_flutter/pages/translatorpages/translator_home_page.dart';
 import 'package:translation_office_flutter/services/shared_service.dart';
-import 'package:translation_office_flutter/pages/client_home_page.dart';
+import 'package:translation_office_flutter/pages/clientpages/client_home_page.dart';
 
 Widget _defaultHome = const LoginPage();
 
@@ -32,15 +31,12 @@ void main() async {
   runApp(
     MaterialApp(
       routes: {
-        '/profile': (context) => Profile(),
-        '/createuser': (context) => CreateUser(),
-        '/booku': (context) => BookApp(),
-        '/register': (context) => SignUpPage(),
-        '/login': (context) => LoginPage(),
+        '/register': (context) => const SignUpPage(),
+        '/login': (context) => const LoginPage(),
         '/': (context) => _defaultHome,
-        '/clienthome': (context) => ClientHomePage(),
-        '/transhome': (context) => TranslatorHomePage(),
-        '/adminhome': (context) => AdminHomePage(),
+        '/clienthome': (context) => const ClientHomePage(),
+        '/transhome': (context) => const TranslatorHomePage(),
+        '/adminhome': (context) => const AdminHomePage(),
       },
     ),
   );

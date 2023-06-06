@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:translation_office_flutter/config.dart';
 import 'package:translation_office_flutter/models/login_request_model.dart';
@@ -25,19 +24,13 @@ class APIService {
       body: jsonEncode(model.toJson()),
     );
     if (response.statusCode == 200) {
-      //print(response.body);
       await SharedService.setLoginDetails(loginResponseJson(response.body));
-      // new code
       res = {"status": "true", "response": loginResponseJson(response.body)};
       return res;
-      //return true;
     } else {
-      // new code
-      print("here-----");
       res = {"status": "false", "response": loginResponseJson(response.body)};
 
       return res;
-      //return false;
     }
   }
 
@@ -47,7 +40,7 @@ class APIService {
       'Content-Type': 'application/json',
     };
     var url = Uri.http(config.apiURL, config.registerAPI);
-    ;
+
     var response = await http.post(
       url,
       headers: requestHeaders,
@@ -55,5 +48,60 @@ class APIService {
     );
 
     return registerResponseJson(response.body);
+  }
+
+  static Future<Map> resetpassword(String username, String email) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    var load = {"username": username, "email": email};
+    var url = Uri.http(config.apiURL, config.resetAPI);
+    var response = await http.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(load),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
+    }
+  }
+
+  static Future<Map> confirmpin(String pin, String email, String type) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    var load = {"code": pin, "email": email, "type": type};
+    var url = Uri.http(config.apiURL, config.checkcode);
+    var response = await http.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(load),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
+    }
+  }
+
+  static Future<Map> changepassword(
+      String password, String email, String type) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    var load = {"password": password, "email": email, "type": type};
+    var url = Uri.http(config.apiURL, config.changepassword);
+    var response = await http.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(load),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
+    }
   }
 }

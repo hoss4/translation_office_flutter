@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: use_key_in_widget_constructors
 class DateTimePicker extends StatefulWidget {
   @override
   State<DateTimePicker> createState() => _DateTimePickertState();
@@ -12,10 +13,10 @@ class _DateTimePickertState extends State<DateTimePicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Date Time Picker"),
+        title: const Text("Date Time Picker"),
       ),
       body: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               ElevatedButton(

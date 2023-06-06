@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:api_cache_manager/api_cache_manager.dart';
@@ -13,6 +15,7 @@ class SharedService {
     return isKeyExist;
   }
 
+  // ignore: body_might_complete_normally_nullable
   static Future<LoginResponseModel?> loginDetails() async {
     var isKeyExist =
         await APICacheManager().isAPICacheKeyExist("login_details");
