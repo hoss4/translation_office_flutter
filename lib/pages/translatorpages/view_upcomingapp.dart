@@ -44,11 +44,11 @@ class _UpcomingAppState extends State<UpcomingApp> {
                     bool inperson = snapshot.data![index]['inperson'];
                     DateTime createdat =
                         DateTime.parse(snapshot.data![index]['created']);
-                    createdat = createdat.add(const Duration(hours: 2));
+                    createdat = createdat.add(const Duration(hours: 3));
 
                     DateTime acceptedat =
                         DateTime.parse(snapshot.data![index]['createdAt']);
-                    acceptedat = acceptedat.add(const Duration(hours: 2));
+                    acceptedat = acceptedat.add(const Duration(hours: 3));
 
                     return Card(
                       child: Padding(

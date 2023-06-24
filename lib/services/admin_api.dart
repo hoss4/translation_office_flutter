@@ -334,4 +334,61 @@ class AdminApi {
       return data;
     }
   }
+
+  static Future<List<dynamic>> getAssignedRequests() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${loginDetails!.data!.token}'
+    };
+    var url2 = "${BASE_URL}getAssignedRequests";
+    var url = Uri.http(config.apiURL, url2);
+    try {
+      var response = await http.get(
+        url,
+        headers: requestHeaders,
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        return data;
+      } else {
+        debugPrint('Could not get Requests');
+        return [];
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  static Future<Map> unassignRequest(String translationid) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${loginDetails!.data!.token}'
+    };
+    var url2 = "${BASE_URL}unassignrequest";
+    var url = Uri.http(config.apiURL, url2);
+
+    try {
+      var response = await http.post(
+        url,
+        headers: requestHeaders,
+        body: jsonEncode({'translationid': translationid}),
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data;
+      } else {
+        var data = jsonDecode(response.body);
+        return data;
+      }
+    } catch (e) {
+      var data = {"status": "error", "message": e.toString()};
+      return data;
+    }
+  }
 }

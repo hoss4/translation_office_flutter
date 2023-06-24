@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:translation_office_flutter/pages/adminpages/admin_home_page.dart';
+import 'package:translation_office_flutter/pages/adminpages/assigned_app_page.dart';
 import 'package:translation_office_flutter/pages/adminpages/create_user.dart';
 import 'package:translation_office_flutter/pages/adminpages/view_appsad.dart';
 import 'package:translation_office_flutter/pages/adminpages/view_oldapp.dart';
@@ -61,6 +62,14 @@ class AdminNaviagtor extends StatelessWidget {
               text: 'Upcoming Appointements',
               icon: Icons.people,
               onClicked: () => SelectedItem(context, 4),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuItem(
+              text: 'Assigned Appointements',
+              icon: Icons.assignment_ind_outlined,
+              onClicked: () => SelectedItem(context, 5),
             ),
             const Divider(
               color: Colors.white,
@@ -140,6 +149,11 @@ class AdminNaviagtor extends StatelessWidget {
       case 4:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const ViewAppA(),
+        ));
+        break;
+      case 5:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AssignedApp(),
         ));
         break;
     }

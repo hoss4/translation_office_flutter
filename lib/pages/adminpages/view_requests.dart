@@ -46,7 +46,7 @@ class _ViewRequestState extends State<ViewRequest> {
                     bool inperson = snapshot.data![index]['inperson'];
                     DateTime createdat =
                         DateTime.parse(snapshot.data![index]['createdAt']);
-                    createdat = createdat.add(const Duration(hours: 2));
+                    createdat = createdat.add(const Duration(hours: 3));
 
                     return Card(
                       child: Padding(

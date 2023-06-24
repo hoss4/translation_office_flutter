@@ -1,27 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:translation_office_flutter/components/translator_navigator.dart';
-import 'package:translation_office_flutter/pages/translatorpages/request_details.dart';
-import 'package:translation_office_flutter/services/translator_api.dart';
+import 'package:translation_office_flutter/components/admin_naviagtor.dart';
+import 'package:translation_office_flutter/pages/adminpages/assigned_info.dart';
+import 'package:translation_office_flutter/services/admin_api.dart';
 
-class ViewMyRequests extends StatefulWidget {
-  const ViewMyRequests({super.key});
+class AssignedApp extends StatefulWidget {
+  const AssignedApp({super.key});
 
   @override
-  State<ViewMyRequests> createState() => _ViewMyRequestsState();
+  State<AssignedApp> createState() => _AssignedAppState();
 }
 
-class _ViewMyRequestsState extends State<ViewMyRequests> {
+class _AssignedAppState extends State<AssignedApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const TranslatorNaviagtor(),
+      drawer: const AdminNaviagtor(),
       appBar: AppBar(
-        title: const Text("Appointements Requests"),
+        title: const Text("Assigned Appointments"),
         centerTitle: true,
       ),
       body: FutureBuilder<List<dynamic>>(
-          future: TranslatorApi.getRequestedTranslations(),
+          future: AdminApi.getAssignedRequests(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
               return const Center(
@@ -41,10 +41,15 @@ class _ViewMyRequestsState extends State<ViewMyRequests> {
                         DateTime(0, 0, 0, date.hour + 2, date.minute);
                     bool onthephone = snapshot.data![index]['onthephone'];
                     String clientname = snapshot.data![index]['clientname'];
+                    String translatorname =
+                        snapshot.data![index]['translatorname'];
                     bool inperson = snapshot.data![index]['inperson'];
                     DateTime createdat =
-                        DateTime.parse(snapshot.data![index]['createdAt']);
+                        DateTime.parse(snapshot.data![index]['created']);
                     createdat = createdat.add(const Duration(hours: 3));
+                    DateTime acceptedat =
+                        DateTime.parse(snapshot.data![index]['createdAt']);
+                    acceptedat = acceptedat.add(const Duration(hours: 3));
 
                     return Card(
                       child: Padding(
@@ -85,7 +90,7 @@ class _ViewMyRequestsState extends State<ViewMyRequests> {
                                     fontWeight: FontWeight.bold, fontSize: 20)),
                           ),
                           subtitle: Text(
-                              ' From $fromlang To $tolang, ${date.day}/${date.month}/${date.year}',
+                              ' From $fromlang To $tolang, ${date.day}/${date.month}/${date.year}  ',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 12)),
                           isThreeLine: true,
@@ -98,16 +103,20 @@ class _ViewMyRequestsState extends State<ViewMyRequests> {
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => RequestDetails(
-                                      translationid: id,
-                                      clientname: clientname,
-                                      fromlang: fromlang,
-                                      tolang: tolang,
-                                      date: date,
-                                      time: newtime,
-                                      onthephone: onthephone,
-                                      inperson: inperson,
-                                      createdat: createdat)));
+                                builder: (context) => AssignedAppInfo(
+                                  translationid: id,
+                                  clientname: clientname,
+                                  fromlang: fromlang,
+                                  tolang: tolang,
+                                  date: date,
+                                  time: newtime,
+                                  onthephone: onthephone,
+                                  inperson: inperson,
+                                  createdat: createdat,
+                                  acceptedat: acceptedat,
+                                  translatorname: translatorname,
+                                ),
+                              ));
                             },
                           ),
                         ),
